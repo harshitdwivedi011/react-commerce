@@ -18,12 +18,12 @@ const MyLogin = () => {
           if (account.email === email && account.password === pswd)
             return account;
         });
-        console.log(success)
         if (success.length > 0) {
           setMessage("Success, Redirecting...");
           localStorage.setItem("token", success[0].id);
           localStorage.setItem("usertype", success[0].type);
-          localStorage.setItem("name", success[0].fullname);
+          localStorage.setItem("name", success[0].fullName);
+          localStorage.setItem("mobile", success[0].mobile);
           window.location.reload();
         } else {
           setMessage("Failed, Invalid Email or Password!");

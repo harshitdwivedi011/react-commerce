@@ -20,8 +20,9 @@ const MyProfile = () => {
         <div className="col-xl-4"></div>
         <div className="col-xl-4 p-4 shadow-1g rounded">
           <h3 className="text-center mb-4 text-primary">My Profile</h3>
-          <p>Full Name: {user.fullname}</p>
+          <p>Full Name: {user.fullName}</p>
           <p>Email ID: {user.email}</p>
+          <p>Mobile: {user.mobile}</p>
           <p>Password: {user.password}</p>
           <p>User Type: {user.type}</p>
         </div>

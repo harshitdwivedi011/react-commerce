@@ -47,7 +47,7 @@ const MyCart = () => {
   };
   let totalAmount = 0;
   let [fullName, setName] = useState(localStorage.getItem("name"));
-  let [mobile, setMobile] = useState("");
+  let [mobile, setMobile] = useState(localStorage.getItem("mobile"));
   let [address, setAddress] = useState("");
   const loginCheck = () => {
     if (localStorage.getItem("token") === null) {
