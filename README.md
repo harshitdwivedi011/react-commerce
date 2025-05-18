@@ -1,70 +1,121 @@
-# Getting Started with Create React App
+# 🛒 React E-Commerce Platform with Role-Based Access
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-fledged e-commerce web application built with React that supports both Buyer and Seller roles. This project simulates product browsing, cart management, and order handling using a static JSON file as a mock backend.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🧰 Tech Stack
 
-### `npm start`
+- **Frontend:** React.js, React Router DOM  
+- **Backend (Mock):** Static `data.json` file (acts as a mock DB)  
+- **Authentication:** Role-based (USER & SELLER)  
+- **State Management:** Component-level state and props
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🚀 Key Features
 
-### `npm test`
+- 🔐 **Authentication System** with role-based redirection  
+- 🧑‍💼 **Separate Dashboards** for Buyers & Sellers  
+- 🛒 **Cart System** for Buyers  
+- 📦 **Product Management** for Sellers  
+- 📜 **Order Tracking** for Both Roles  
+- 🔄 Basic Routing using React Router DOM
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 📁 Folder Structure
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+📦 react-commerce/
+├── App.js                 # Route configuration and redirection
+├── index.js               # React entry point
+├── publicmodule/          # Login, Signup, Cart, Home (Buyer-facing)
+├── sellermodule/          # Dashboard, Orders, Product Management (Seller-facing)
+├── usermodule/            # My Orders, Profile, Dashboard (Buyer-facing)
+├── logout.js              # Logout handler
+└── api/data.json          # Static mock database for users, products, and orders
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🔄 Data Flow Overview
 
-### `npm run eject`
+### 🧑‍💼 1. **Authentication Flow**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- On login/signup (via `login.js` or `signup.js`), the app verifies credentials against user records from `data.json`.
+- Based on the `role` (`USER` or `SELLER`), the user is routed to their respective dashboard via `App.js`.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 🛒 2. **Buyer (USER) Data Flow**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. **Landing Page →** `publichome.js` fetches and displays available products from `data.json`.
 
-## Learn More
+2. **Product Interaction →** `home.js` allows buyers to view and add products to the cart.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3. **Cart →** `cart.js` maintains an array of selected items (stored in local state or context).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+4. **Placing an Order →**
+   - Once the buyer checks out, order details are appended to their record in `data.json`.
+   - An entry is also logged under the associated seller for tracking.
 
-### Code Splitting
+5. **Order History →** `myorder.js` filters and displays orders linked to the logged-in buyer's ID.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+### 🧑‍🔧 3. **Seller (SELLER) Data Flow**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1. **Seller Dashboard →** `dashboard.js` presents quick stats (orders, product count, etc.).
 
-### Making a Progressive Web App
+2. **Product Management →**
+   - `newproduct.js` allows form-based entry to add a product into the global product list (stored in `data.json`).
+   - `productlist.js` fetches and displays all products by the current seller.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+3. **Order Tracking →** `orderlist.js` filters and shows orders where the seller's products were bought.
 
-### Advanced Configuration
+## 📦 Module Responsibilities
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### 🔓 publicmodule/
 
-### Deployment
+| Component        | Description                                      |
+|------------------|--------------------------------------------------|
+| `login.js`       | Authenticates user and sets role                 |
+| `signup.js`      | Registers new user (USER or SELLER)              |
+| `publichome.js`  | App landing page and d isplays top products with pagination                              |
+| `home.js`        | Product listing and “Add to Cart” Uses filtering and sorting.             |
+| `cart.js`        | Displays cart, triggers mock order placement     |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### 👤 usermodule/
 
-### `npm run build` fails to minify
+| Component        | Description                                      |
+|------------------|--------------------------------------------------|
+| `userhome.js`    | Dashboard showing user-specific stats            |
+| `myorder.js`     | Displays past orders for the user                |
+| `userProfile.js` | Displays/editable profile (static version)       |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 🛍️ sellermodule/
+
+| Component        | Description                                      |
+|------------------|--------------------------------------------------|
+| `dashboard.js`   | Seller overview panel                            |
+| `newproduct.js`  | Adds new products to inventory                   |
+| `productlist.js` | Shows/edit seller's own products                 |
+| `orderlist.js`   | Filters and shows seller-related orders          |
+
+---
+
+## 🧪 How to Run the Project Locally
+
+```bash
+# 1. Go to frontend directory
+cd react-commerce
+
+# 2. Install dependencies
+npm install
+
+# 3. Run the development server
+npm start
+```
+
+📌 Note: This project does not persist data beyond session refresh.
